@@ -141,7 +141,14 @@ class Store:
 
     @staticmethod
     def _product_from_row(row: dict[str, Any]) -> Product:
-        return Product(id=UUID(str(row["id"])), created_at=row["created_at"], updated_at=row.get("created_at"), name=row["name"], description=row.get("description") or "", active=row.get("is_active", True))
+        return Product(
+            id=UUID(str(row["id"])),
+            created_at=row["created_at"],
+            updated_at=row.get("updated_at") or row["created_at"],
+            name=row["name"],
+            description=row.get("description") or "",
+            active=row.get("status", "active") == "active",
+        )
 
     @staticmethod
     def _plan_from_row(row: dict[str, Any]) -> Plan:
@@ -174,7 +181,16 @@ class Store:
     @staticmethod
     def _row_for(table_name: str, item: T) -> dict[str, Any]:
         if table_name == "products":
-            return {"id": str(item.id), "name": item.name, "type": "service", "sales_price": "0", "cost_price": "0", "description": item.description, "variants": [], "is_active": item.active}
+            return {
+                "id": str(item.id),
+                "name": item.name,
+                "code": f"BL-{str(item.id).split('-')[0].upper()}",
+                "category": "service",
+                "description": item.description,
+                "status": "active" if item.active else "inactive",
+                "created_at": item.created_at.isoformat(),
+                "updated_at": item.updated_at.isoformat(),
+            }
         if table_name == "plans":
             return {"id": str(item.id), "product_id": str(item.product_id), "name": item.name, "price": str(item.price), "billing_cycle": item.billing_interval, "min_quantity": 1, "allow_pause": True}
         if table_name == "customers":
