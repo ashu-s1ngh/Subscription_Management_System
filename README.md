@@ -13,11 +13,11 @@ source .venv/bin/activate
 # Windows PowerShell
 # .venv\Scripts\Activate.ps1
 
-python -m pip install -r requirements.txt
-python -m uvicorn app.main:app --reload
+python -m pip install -r backend/requirements.txt
+python -m uvicorn app.main:app --app-dir backend --reload
 ```
 
-The API will be available at `http://127.0.0.1:8000`; interactive documentation is at `http://127.0.0.1:8000/docs`. The temporary store seeds one product and plan at startup. Send `X-Role: admin` or `X-Role: staff` while the Supabase Auth integration is being wired; the `require_role` dependency is the replacement point for JWT/Supabase claims.
+The API will be available at `http://127.0.0.1:8000`; interactive documentation is at `http://127.0.0.1:8000/docs`. The canonical backend lives in `backend/`. The temporary store seeds one product and plan at startup. Send `X-Role: admin` or `X-Role: staff` while the Supabase Auth integration is being wired; the `require_role` dependency is the replacement point for JWT/Supabase claims.
 
 ## MVP endpoints
 

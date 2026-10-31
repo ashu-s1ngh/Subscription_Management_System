@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import Any, TypeVar
 from uuid import UUID, uuid4
 
-from .models import (
+from .mvp_models import (
     Customer, Discount, Invoice, Payment, Plan, Product, Subscription,
 )
 
@@ -62,3 +62,4 @@ store.seed()
 
 def today() -> date:
     return datetime.now(timezone.utc).date()
+

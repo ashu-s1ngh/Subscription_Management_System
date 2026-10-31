@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from app.main import app
+from backend.app.main import app
 
 
 client = TestClient(app)
@@ -36,3 +36,4 @@ def test_subscription_accepts_explicit_start_date() -> None:
     response = client.post("/api/v1/subscriptions", headers={"X-Role": "admin"}, json={"customer_id": customer["id"], "plan_id": plan["id"], "start_on": "2026-10-31"})
     assert response.status_code == 201
     assert response.json()["start_on"] == "2026-10-31"
+
