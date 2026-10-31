@@ -24,10 +24,10 @@ The API will be available at `http://127.0.0.1:8000`; interactive documentation 
 The database migrations are in `supabase/migrations/`. After receiving access to the Supabase project, link and deploy them:
 
 ```bash
-supabase login
-supabase link --project-ref YOUR_PROJECT_REF
-supabase db push --dry-run
-supabase db push
+npx supabase login
+npx supabase link --project-ref YOUR_PROJECT_REF
+npx supabase db push --dry-run
+npx supabase db push
 ```
 
 Copy `backend/.env.example` to `.env` at the repository root and fill in the Supabase URL and service-role key. The API uses Supabase persistence when real credentials are configured; without them it uses the in-memory demo store.
