@@ -27,3 +27,6 @@ dist/
 *.pem
 .vscode/
 .idea/
+
+# Supabase CLI local state
+supabase/.temp/
