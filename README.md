@@ -19,6 +19,21 @@ python -m uvicorn app.main:app --app-dir backend --reload
 
 The API will be available at `http://127.0.0.1:8000`; interactive documentation is at `http://127.0.0.1:8000/docs`. The canonical backend lives in `backend/`. The temporary store seeds one product and plan at startup. Send `X-Role: admin` or `X-Role: staff` while the Supabase Auth integration is being wired; the `require_role` dependency is the replacement point for JWT/Supabase claims.
 
+## Supabase integration
+
+The database migrations are in `supabase/migrations/`. After receiving access to the Supabase project, link and deploy them:
+
+```bash
+supabase login
+supabase link --project-ref YOUR_PROJECT_REF
+supabase db push --dry-run
+supabase db push
+```
+
+Copy `backend/.env.example` to `.env` at the repository root and fill in the Supabase URL and service-role key. The API uses Supabase persistence when real credentials are configured; without them it uses the in-memory demo store.
+
+Never expose `SUPABASE_SERVICE_ROLE_KEY` to the frontend or commit `.env`.
+
 ## MVP endpoints
 
 - `POST/GET /api/v1/products`, `/plans`, `/customers`, `/discounts`

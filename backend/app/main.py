@@ -5,13 +5,23 @@ from decimal import Decimal, ROUND_HALF_UP
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from .core.config import settings
 from .mvp_models import *
 from .store import ConflictError, NotFoundError, Store, store, today
 
 app = FastAPI(title="Brightloop Subscription API", version="0.1.0", description="Business logic API for subscription billing.")
 api = APIRouter(prefix="/api/v1")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[origin.strip() for origin in settings.FRONTEND_ORIGINS.split(",") if origin.strip()],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_store() -> Store:
