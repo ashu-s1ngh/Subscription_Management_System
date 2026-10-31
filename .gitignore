@@ -30,3 +30,4 @@ dist/
 
 # Supabase CLI local state
 supabase/.temp/
+backend/app/supabase/.temp/
